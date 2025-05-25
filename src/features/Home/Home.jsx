@@ -2,23 +2,22 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Post from "../Post/Post";
 import {
-  fetchComments,
   fetchPosts,
   selectFilteredPosts,
   setSearchTerm,
+  fetchComments,
 } from "../../store/redditSlice";
 import "./Home.css";
-import getRandomNumber from "../../utils/getRandomNumber";
 
 const Home = () => {
   const reddit = useSelector((state) => state.reddit);
-  const { isLoading, error, searchTerm, selectedSubreddits } = reddit;
+  const { isLoading, error, searchTerm, selectedSubreddit } = reddit;
   const posts = useSelector(selectFilteredPosts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPosts(selectedSubreddits));
-  }, [selectedSubreddits]);
+    dispatch(fetchPosts(selectedSubreddit));
+  }, [selectedSubreddit]);
 
   const onToggleComments = (index) => {
     const getComments = (permalink) => {
@@ -31,12 +30,12 @@ const Home = () => {
   if (error) {
     return (
       <div className="error">
-        <h2>Failed to load.</h2>
+        <h2>Failed to load posts.</h2>
         <button
           type="button"
-          onClick={() => dispatch(fetchPosts(selectedSubreddits))}
+          onClick={() => dispatch(fetchPosts(selectedSubreddit))}
         >
-          Try again.
+          Try again
         </button>
       </div>
     );
@@ -45,9 +44,9 @@ const Home = () => {
   if (posts.length === 0) {
     return (
       <div className="error">
-        <h2>No posts</h2>
+        <h2>No posts matching "{searchTerm}"</h2>
         <button type="button" onClick={() => dispatch(setSearchTerm(""))}>
-          Back to Home.
+          Go home
         </button>
       </div>
     );

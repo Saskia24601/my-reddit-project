@@ -29,20 +29,15 @@ const Header = () => {
         <p className="logo-text">Reddit Mini</p>
         <FontAwesomeIcon icon={faReddit} className="logo-img" />
       </div>
-      <form className="search-form">
+      <form className="search" onSubmit={onSearchTermSubmit}>
         <input
           type="text"
           placeholder="Search Reddit Mini"
           value={searchTermLocal}
-          aria-label="Search Reddit"
-          onChange={(e) => setSearchTermLocal(e.target.value)}
+          onChange={onSearchTermChange}
+          aria-label="Search posts"
         />
-        <button
-          icon={faMagnifyingGlass}
-          type="submit"
-          onClick={onSearchTermSubmit}
-          aria-label="Search"
-        >
+        <button type="submit" onClick={onSearchTermSubmit} aria-label="Search">
           <FontAwesomeIcon icon={faMagnifyingGlass} />
           Search
         </button>
